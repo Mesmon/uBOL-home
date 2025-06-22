@@ -284,6 +284,31 @@ dom.on('#lessButton', 'click', ( ) => {
 
 /******************************************************************************/
 
+dom.on('[data-i18n-title="popupTipNoFiltering"]', 'click', async ev => {
+    if ( ev.isTrusted !== true ) { return; }
+    if ( ev.button !== 0 ) { return; }
+    if ( tabURL.hostname === '' ) { return; }
+    const hn = normalizedHostname(tabURL.hostname);
+    const level = await sendMessage({
+        what: 'setFilteringMode',
+        hostname: hn,
+        level: 0,
+    });
+    setFilteringMode(level);
+    if ( popupPanelData.autoReload ) {
+        const justReload = tabURL.href === currentTab.url;
+        self.setTimeout(( ) => {
+            if ( justReload ) {
+                browser.tabs.reload(currentTab.id);
+            } else {
+                browser.tabs.update(currentTab.id, { url: tabURL.href });
+            }
+        }, 437);
+    }
+});
+
+/******************************************************************************/
+
 dom.on('#showMatchedRules', 'click', ev => {
     if ( ev.isTrusted !== true ) { return; }
     if ( ev.button !== 0 ) { return; }
