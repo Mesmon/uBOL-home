@@ -43,6 +43,10 @@
     "message": "Open the dashboard",
     "description": "English: Click to open the dashboard"
   },
+  "popupTipNoFiltering": {
+    "message": "Disable filtering on this site",
+    "description": "Tooltip for the button used to disable filtering for the current site"
+  },
   "popupMoreButton": {
     "message": "More",
     "description": "Label to be used to show popup panel sections"
